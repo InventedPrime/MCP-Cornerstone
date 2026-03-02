@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './css/index.css'
 import { logInUser, signInUser } from './utils/firebase.ts'
-import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Link, redirect, RouterProvider } from 'react-router-dom'
 import { Home } from './view/Home.tsx'
 import { DashboardArtMuseum, DashboardArtPictures, DashboardCredentials  } from './view/Dashboard'
 import { SignIn } from './view/SignIn.tsx'
@@ -54,8 +54,8 @@ const router = createBrowserRouter([
       return null;
     }
   }},
-  {path: '/Dashboard', element: <Navigate to='/Dashboard/ArtMuseum' />},
-  {path: '*', element: <Navigate to='/Home' />},
+  {path: '/Dashboard', element: <Link to='/Dashboard/ArtMuseum' />},
+  {path: '*', element: <Link to='/Home' />},
 ])
 
 createRoot(document.getElementById('root')!).render(

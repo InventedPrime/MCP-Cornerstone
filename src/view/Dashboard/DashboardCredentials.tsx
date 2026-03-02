@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { FooterComponent } from "../../components/FooterComponent"
 import { Header } from "../../components/Header"
 import { Panel } from "../../components/Panel"
@@ -12,7 +12,7 @@ export const DashboardCredentials = () => {
         alert("UserId: "+user?.uid)
     }
 
-     return !user ? <Navigate to="/SignIn" /> :
+     return !user ? <Link to="/SignIn" /> :
         <div className="page-wrapper">
                <Header />
                <div className='dashboard-container'>

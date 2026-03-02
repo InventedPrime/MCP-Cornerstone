@@ -1,6 +1,6 @@
 import { Header } from '../../components/Header';
 import { FooterComponent } from "../../components/FooterComponent";
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Panel } from '../../components/Panel';
 import { useAuth } from '../../context/AuthContext';
 import { useEffect, useState } from 'react';
@@ -30,7 +30,7 @@ export const DashboardArtPictures = () => {
       removeLikedPost(user!.uid, artworkId);
     }
 
-    return !user ? <Navigate to="/SignIn" /> :
+    return !user ? <Link to="/SignIn" /> :
       <div className="page-wrapper">
         <Header />
         <div className='dashboard-container'>

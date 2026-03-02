@@ -3,10 +3,10 @@ import axios from "axios";
 
 export async function getLikedArtworks(userId: string) {
   try {
-    console.error(`Fetching liked posts for user: ${userId}`);
+    console.log(`Fetching liked posts for user: ${userId}`);
     const snapshot = await db.ref(`users/${userId}/likedPosts`).get();
-    console.error(`Snapshot exists: ${snapshot.exists()}`);
-    console.error(`Snapshot value: ${JSON.stringify(snapshot.val())}`);
+    console.log(`Snapshot exists: ${snapshot.exists()}`);
+    console.log(`Snapshot value: ${JSON.stringify(snapshot.val())}`);
 
     if (!snapshot.exists()) {
       return {
