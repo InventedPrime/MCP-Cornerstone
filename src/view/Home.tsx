@@ -6,8 +6,9 @@ export const Home = () => {
     const navigate = useNavigate();
 
     return(
-      <div className="page-wrapper">
+      <div className="page-wrapper"> 
         <Header />
+        {/* This structure below was AI generated, I had to tweak the CSS file to ensure everything looked correct*/}
         <main className="main-content">
           <div className="hero-card">
             <div className="hero-logo">

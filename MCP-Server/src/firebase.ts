@@ -1,10 +1,14 @@
+/**
+ * MCP Server for Cornerstone
+ * All of this Was AI Generated.
+ */
 import * as admin from "firebase-admin";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
 
 dotenv.config();
-// Find serviceAccount.json - check multiple possible locations
+
 function loadServiceAccount(): admin.ServiceAccount {
   const possiblePaths = [
     path.join(process.cwd(), "serviceAccount.json"),

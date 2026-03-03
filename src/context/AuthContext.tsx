@@ -5,7 +5,8 @@ import type { AuthContextType } from "../types";
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
-    loading: true,
+    loading: true, // loading is true until we know if the user is logged in or not
+    // Ill use this to create a loader component 
 })
 
 export const useAuth = () => useContext(AuthContext)
