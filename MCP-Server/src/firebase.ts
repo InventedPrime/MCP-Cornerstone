@@ -4,14 +4,11 @@ import * as fs from "fs";
 import * as path from "path";
 
 dotenv.config();
-
 // Find serviceAccount.json - check multiple possible locations
 function loadServiceAccount(): admin.ServiceAccount {
   const possiblePaths = [
     path.join(process.cwd(), "serviceAccount.json"),
     path.join(__dirname, "../serviceAccount.json"),
-    path.join(__dirname, "../../serviceAccount.json"),
-    "/app/serviceAccount.json", // Docker path
   ];
 
   for (const p of possiblePaths) {

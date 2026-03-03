@@ -25,7 +25,7 @@ export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getDatabase(app);
 
-export const signInUser = async (
+export const signUpUser = async (
   username: string,
   email: string,
   password: string,
@@ -38,7 +38,7 @@ export const signInUser = async (
     );
     await updateProfile(user, { displayName: username });
   } catch (error) {
-    console.error("Sign-in error:", error);
+    console.error("Sign-up error:", error);
     throw error;
   }
 };

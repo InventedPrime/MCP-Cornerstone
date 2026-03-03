@@ -1,6 +1,6 @@
 import { Header } from '../../components/Header';
 import { FooterComponent } from "../../components/FooterComponent";
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Panel } from '../../components/Panel';
 import { useAuth } from '../../context/AuthContext';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,6 @@ import { getMuseumArtworksByIds } from '../../utils/MuseumArtworks';
 export const DashboardArtPictures = () => {
     const { user } = useAuth();
     const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
-
 
     useEffect(() => {
   
@@ -30,7 +29,7 @@ export const DashboardArtPictures = () => {
       removeLikedPost(user!.uid, artworkId);
     }
 
-    return !user ? <Link to="/SignIn" /> :
+    return !user ? <Navigate to="/SignUp" /> :
       <div className="page-wrapper">
         <Header />
         <div className='dashboard-container'>

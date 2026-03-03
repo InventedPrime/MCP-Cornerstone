@@ -6,8 +6,10 @@ export const MuseumArtworks = fetch(
   `https://api.artic.edu/api/v1/artworks?limit=100&page=${getRandomPage()}&fields=id,title,image_id,artist_display`,
 )
   .then((res) => res.json())
-  .then((data) =>
-    data.data.filter((artwork: any) => artwork.title && artwork.image_id),
+  .then(({ data }) =>
+    data.filter(
+      (artwork: any) => artwork.title !== "Untitled" && artwork.image_id,
+    ),
   );
 
 export const getMuseumArtworksByIds = (ids: string[]) => {
