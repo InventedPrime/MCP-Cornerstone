@@ -2,7 +2,7 @@
 import { Form } from "react-router-dom";
 
 const FormComponent = ({typeOfForm}: {typeOfForm: string}) => {
-  const title = typeOfForm === "SignIn" ? "Sign In Form" : "Log In Form";
+  const title = typeOfForm === "SignUp" ? "Sign Up Form" : "Log In Form";
 
   return (
     <div className="form-container">
@@ -11,7 +11,7 @@ const FormComponent = ({typeOfForm}: {typeOfForm: string}) => {
               {typeOfForm === "LogIn" ?  null : <input type="text" name="username" placeholder="Username" required /> }
               <input type="email" name="email" placeholder="Email" required />
               <input type="password" name="password" placeholder="Password" required />
-              <button type="submit">{typeOfForm === "SignIn" ? "Sign In" : "Log In"}</button>
+              <button type="submit">{typeOfForm === "SignUp" ? "Sign Up" : "Log In"}</button>
         </Form>
     </div>
   );

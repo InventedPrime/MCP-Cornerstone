@@ -1,23 +1,24 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { signOutUser } from "../utils/firebase";
 
-export const SignIn = ({isSigningIn}: {isSigningIn: boolean}) => {
+export const SignUpButton = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
-        <button disabled={isSigningIn} onClick={() => navigate('/SignIn')}>Sign In</button>
+        <button disabled={location.pathname === '/SignUp'} onClick={() => navigate('/SignUp')}>Sign Up</button>
     )
 };
 
-export const LogIn = ({isLoggingIn}: {isLoggingIn: boolean}) => {
+export const LogInButton = () => {
     const navigate = useNavigate();
-    
+    const location = useLocation();
     return (
-        <button disabled={isLoggingIn} onClick={() => navigate('/LogIn')}>Log In</button>
+        <button disabled={location.pathname === '/LogIn'} onClick={() => navigate('/LogIn')}>Log In</button>
     )
 }
     
-export const LogOut = () => {
+export const LogOutButton = () => {
     const navigate = useNavigate();
 
     const handleSignOut = async () => {

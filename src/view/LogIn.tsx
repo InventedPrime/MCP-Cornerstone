@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 export const LogIn = () => {
     const { user } = useAuth();
 
-    
-
     return user ? <Link to="/Dashboard" />
     :  
     <div className="page-wrapper">

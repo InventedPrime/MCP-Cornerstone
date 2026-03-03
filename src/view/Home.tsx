@@ -17,7 +17,7 @@ export const Home = () => {
               <h1>MCP Cornerstone Solutions</h1>
               <p>Explore art collections powered by MCP technology and Claude AI. <br /> Get intelligent answers about artworks, discover new pieces, and build your personal collection with AI-enhanced insights.</p>
             </div>
-            <button onClick={() => navigate('/SignIn')}>Get Started</button>
+            <button onClick={() => navigate('/SignUp')}>Get Started</button>
           </div>
 
           <div className="features">
