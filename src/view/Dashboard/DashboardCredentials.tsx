@@ -12,7 +12,7 @@ export const DashboardCredentials = () => {
         alert("UserId: "+user?.uid)
     }
 
-     return !user ? <Navigate to="/SignIn" /> :
+     return !user ? <Navigate to="/SignUp" /> :
         <div className="page-wrapper">
                <Header />
                <div className='dashboard-container'>

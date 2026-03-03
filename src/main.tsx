@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './css/index.css'
-import { logInUser, signInUser } from './utils/firebase.ts'
+import { logInUser, signUpUser } from './utils/firebase.ts'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 import { Home } from './view/Home.tsx'
 import { DashboardArtMuseum, DashboardArtPictures, DashboardCredentials  } from './view/Dashboard'
-import { SignIn } from './view/SignIn.tsx'
+import { SignUp } from './view/SignUp.tsx'
 import { LogIn } from './view/LogIn.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 const router = createBrowserRouter([
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   {path: '/Dashboard/ArtMuseum', element: <DashboardArtMuseum />},
   {path: '/Dashboard/LikedPictures', element: <DashboardArtPictures />},
   {path: '/Dashboard/Credentials', element: <DashboardCredentials />},
-  {path: '/SignIn', element: <SignIn/>,
+  {path: '/SignUp', element: <SignUp/>,
     action: async ({request}) => {
       const formData = await request.formData();
       const username = formData.get('username')!.toString();
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       }
 
       try {
-        await signInUser(username, email, password);
+        await signUpUser(username, email, password);
         return redirect('/Dashboard');
       } catch (error: any) {
         alert(error.message);
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       return null;
     }
   }},
-  {path: '/Dashboard', element: <Navigate to='/Dashboard/ArtMuseum' />},
+  {path: '/Dashboard', element: <Navigate to='/Dashboard/ArtMuseum' />}, // For some reason < Link /> doesnt work in this case because it only works when its attached to a clickable element?
   {path: '*', element: <Navigate to='/Home' />},
 ])
 

@@ -1,16 +1,14 @@
 import { onAuthStateChanged, type User } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../utils/firebase";
-
-type AuthContextType = {
-    user: User | null;
-    loading: boolean; // this prevents the app from rendering before the user is logged in 
-}
+import type { AuthContextType } from "../types";
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     loading: true,
 })
+
+export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -25,10 +23,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{user: currentUser, loading}}> 
+        <AuthContext.Provider value={{user: currentUser, loading: loading}}> 
             {children}
         </AuthContext.Provider>
     )
 }
-
-export const useAuth = () => useContext(AuthContext)

@@ -21,14 +21,11 @@ export const DashboardArtMuseum = () => {
     }
 
     useEffect(() => {
-      getLikedPosts(user!.uid, setLikedPictures)
+      if (!user?.uid) return;
+      getLikedPosts(user.uid, setLikedPictures)
     }, [])
 
-    useEffect(() => {
-      console.log(likedPictures);
-    }, [likedPictures])
-
-    return !user ? <Navigate to="/SignIn" /> :
+    return !user ? <Navigate to="/SignUp" /> :
       <div className="page-wrapper">
         <Header />
         <div className='dashboard-container'>

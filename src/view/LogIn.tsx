@@ -8,8 +8,6 @@ import { Navigate } from 'react-router-dom';
 export const LogIn = () => {
     const { user } = useAuth();
 
-    
-
     return user ? <Navigate to="/Dashboard" />
     :  
     <div className="page-wrapper">

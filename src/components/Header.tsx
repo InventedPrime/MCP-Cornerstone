@@ -1,29 +1,12 @@
 // import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LogIn, SignIn, LogOut } from './SignInOut';
-import {  useEffect, useState } from 'react';
+import { LogInButton, SignUpButton, LogOutButton } from './SignInOut';
 import { useAuth } from '../context/AuthContext';
 
 
 export const Header = () => {
-    const [isSigningIn, setIsSigningIn] = useState(false);
-    const [isLoggingIn, setIsLoggingIn] = useState(false);
     const { user } = useAuth();
     const location = useLocation();
-
-
-    useEffect(() => {
-        if (location.pathname === '/SignIn') {
-            setIsSigningIn(true);
-        } else {
-            setIsSigningIn(false);
-        }
-        if (location.pathname === '/LogIn') {
-            setIsLoggingIn(true);
-        } else {
-            setIsLoggingIn(false);
-        }
-    }, [location.pathname])
 
     return (
         <>
@@ -53,8 +36,8 @@ export const Header = () => {
             <div className='header-container-sign'>
             <p>
               { user ? user.displayName : "Guest"}</p>
-              { user ? <LogOut  /> : <SignIn isSigningIn={isSigningIn} />}
-              { user ? null : <LogIn isLoggingIn={isLoggingIn} />}
+              { user ? <LogOutButton  /> : <SignUpButton  />}
+              { user ? null : <LogInButton />}
             </div>
         </header>
         </>

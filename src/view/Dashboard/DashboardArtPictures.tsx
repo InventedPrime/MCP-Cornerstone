@@ -10,7 +10,6 @@ export const DashboardArtPictures = () => {
     const { user } = useAuth();
     const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
 
-
     useEffect(() => {
   
       const unsub = getLikedPosts(user!.uid, async (ids: string[]) => {
@@ -30,7 +29,7 @@ export const DashboardArtPictures = () => {
       removeLikedPost(user!.uid, artworkId);
     }
 
-    return !user ? <Navigate to="/SignIn" /> :
+    return !user ? <Navigate to="/SignUp" /> :
       <div className="page-wrapper">
         <Header />
         <div className='dashboard-container'>
