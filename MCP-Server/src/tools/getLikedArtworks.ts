@@ -1,8 +1,7 @@
-/*
-* AI helped me write this entire file to hook up the MCP
-*/
-
-
+/**
+ * MCP Server for Cornerstone
+ * All of this Was AI Generated.
+ */
 import { db } from "../firebase";
 import axios from "axios";
 
@@ -19,7 +18,9 @@ export async function getLikedArtworks(userId: string) {
 
     const idsParam = likedIds.join(",");
 
-    const { data: { data } } = await axios.get(
+    const {
+      data: { data },
+    } = await axios.get(
       `https://api.artic.edu/api/v1/artworks?ids=${idsParam}&fields=id,title,artist_display,date_display,medium_display,image_id`,
     );
 

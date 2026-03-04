@@ -8,7 +8,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, set, ref, remove, onValue } from "firebase/database";
 
-// Firebases config object
+// Firebases config object, genereated by firebase in my firebase project settings
 const firebaseConfig = {
   apiKey: "AIzaSyDfyvg35N9CWWOHknPcYI0xNMb0_iLQixw",
   authDomain: "mcp-project-471a6.firebaseapp.com",
