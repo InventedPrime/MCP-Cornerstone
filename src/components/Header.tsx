@@ -2,14 +2,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LogInButton, SignUpButton, LogOutButton } from './SignInOut';
 import { useAuth } from '../context/AuthContext';
-
+import { Loader } from './Loader';
 
 export const Header = () => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const location = useLocation();
-
+    console.log(loading, user)
     return (
         <>
+        <Loader isLoading={loading}/>
         <header>
             <div className='header-container-logo'>
                 <img src="/MCPLogo.png" alt="MCP Logo" />
