@@ -22,7 +22,7 @@ export const getMuseumArtworksByIds = (ids: string[]) => {
         ...artwork,
         imageUrl:
           artwork.image_id ?
-            `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`
+            `https://www.artic.edu/iiif/2/${artwork.image_id}/full/!843,843/0/default.jpg`
           : null,
       })),
     );
