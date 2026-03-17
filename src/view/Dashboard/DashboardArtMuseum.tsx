@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { use, useEffect, useState } from 'react';
 import { MuseumArtworks } from '../../utils/MuseumArtworks';
 import { getLikedPosts, savedLikedPost } from '../../utils/firebase';
+
 export const DashboardArtMuseum = () => {
     const { user } = useAuth();
     const [likedPictures, setLikedPictures] = useState<string[]>([]);

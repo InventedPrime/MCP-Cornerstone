@@ -339,7 +339,6 @@ header {
     align-items: stretch;
     align-content: flex-start;
     gap: 20px;
-    padding: 20px;
     width: 100%;
     flex-wrap: wrap;
 
@@ -349,6 +348,7 @@ header {
         justify-content: space-between;
         align-items: center;
         gap: 20px;
+        padding: 20px;
         
 
         p {
@@ -420,6 +420,16 @@ header {
     }
 } 
 
+
+/* LinkedIn Dashboard */
+.linkedin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 100%;
+    gap: 20px;
+}
 
 /* loader */
 .loader-container {

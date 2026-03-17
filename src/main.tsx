@@ -4,7 +4,7 @@ import './css/index.css'
 import { logInUser, signUpUser } from './utils/firebase.ts'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 import { Home } from './view/Home.tsx'
-import { DashboardArtMuseum, DashboardArtPictures, DashboardCredentials  } from './view/Dashboard'
+import { DashboardArtMuseum, DashboardArtPictures, DashboardCredentials, DashboardLinkedIn } from './view/Dashboard'
 import { SignUp } from './view/SignUp.tsx'
 import { LogIn } from './view/LogIn.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
@@ -12,6 +12,7 @@ const router = createBrowserRouter([
   {path: '/Home', element: <Home />},
   {path: '/Dashboard/ArtMuseum', element: <DashboardArtMuseum />},
   {path: '/Dashboard/LikedPictures', element: <DashboardArtPictures />},
+  {path: '/Dashboard/PostedOnLinkedIn', element: <DashboardLinkedIn />},
   {path: '/Dashboard/Credentials', element: <DashboardCredentials />},
   {path: '/SignUp', element: <SignUp/>,
     action: async ({request}) => {

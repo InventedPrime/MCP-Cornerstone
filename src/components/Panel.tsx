@@ -6,9 +6,10 @@ export const Panel = () => {
 
     return (
         <div className='panel-container'>
-            <button className={"sidebars " + (location.pathname === '/Dashboard/ArtMuseum' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/ArtMuseum')}>Art Museum </button>
-            <button className={"sidebars " + (location.pathname === '/Dashboard/LikedPictures' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/LikedPictures')}>Liked Pictures </button>
-            <button className={"sidebars " + (location.pathname === '/Dashboard/Credentials' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/Credentials')}>Credentials </button>
+            <button className={"sidebars " + (location.pathname === '/Dashboard/ArtMuseum' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/ArtMuseum')}>Art Museum</button>
+            <button className={"sidebars " + (location.pathname === '/Dashboard/LikedPictures' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/LikedPictures')}>Liked Pictures</button>
+            <button className={"sidebars " + (location.pathname === '/Dashboard/PostedOnLinkedIn' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/PostedOnLinkedIn')}>Post On LinkedIn</button>
+            <button className={"sidebars " + (location.pathname === '/Dashboard/Credentials' ? 'locationpresent' : '')} onClick={() => navigate('/Dashboard/Credentials')}>Credentials</button>
         </div>
     )
 }
