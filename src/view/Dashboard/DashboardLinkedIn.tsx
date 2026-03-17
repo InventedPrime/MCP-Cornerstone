@@ -13,6 +13,7 @@ export const DashboardLinkedIn = () => {
             <div className='dashboard-container'>
                 <Panel />
                 <div className="linkedin-container">
+                    <h1>Post On LinkedIn Coming Soon!</h1>
                 </div>
             </div>
             <FooterComponent />
