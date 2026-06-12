@@ -65,7 +65,7 @@ export const signOutUser = async () => {
 };
 
 export const savedLikedPost = (userId: string, postId: string) => {
-  set(ref(db, "users/" + userId + "/likedPosts/" + postId), true);
+  set(ref(db, "users/" + userId + "/likedPosts/" + postId), Date.now());
 };
 export const removeLikedPost = (userId: string, postId: string) => {
   remove(ref(db, "users/" + userId + "/likedPosts/" + postId));
@@ -73,6 +73,7 @@ export const removeLikedPost = (userId: string, postId: string) => {
 
 export const getLikedPosts = (userId: string, setCallBack: any) => {
   const likedPostsRef = ref(db, "users/" + userId + "/likedPosts");
+
   const unsub = onValue(likedPostsRef, (snapshot) => {
     setCallBack(Object.keys(snapshot.val() || {}));
   });
