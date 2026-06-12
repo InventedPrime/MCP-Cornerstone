@@ -394,7 +394,7 @@ header {
     font-size: 26px;
     width: 300px;
     background-color: transparent;
-    border: solid var(--blue);
+    border: solid var(--light-blue);
     border-radius: 10px;
     font-weight: bold;
   }
