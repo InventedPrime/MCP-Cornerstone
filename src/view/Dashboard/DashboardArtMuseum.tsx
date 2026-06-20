@@ -8,7 +8,7 @@ import { MuseumArtworks } from "../../utils/MuseumArtworks";
 import { getLikedPosts, savedLikedPost } from "../../utils/firebase";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
-import { hiddenInformation } from "../../utils/sleep";
+import { triggerLoading } from "../../utils/sleep";
 
 export const DashboardArtMuseum = () => {
   const { user } = useAuth();
@@ -18,14 +18,8 @@ export const DashboardArtMuseum = () => {
   const Artworks = use(MuseumArtworks); // this lets us read the value of a promise! very cool
   const currentArtwork = Artworks[currentArtworkIndex];
 
-  const triggerLoading = async () => {
-    setIsLoading(true);
-    await hiddenInformation();
-    setIsLoading(false);
-  };
-
   const handleOnLike = async () => {
-    await triggerLoading();
+    await triggerLoading(setIsLoading);
     if (!likedPictures.includes(currentArtwork.id)) {
       setLikedPictures((prev) => [...prev, currentArtwork.id.toString()]);
       savedLikedPost(user!.uid, currentArtwork.id.toString());
@@ -73,7 +67,7 @@ export const DashboardArtMuseum = () => {
               <div className="navigate-container">
                 <button
                   onClick={async () => {
-                    await triggerLoading();
+                    await triggerLoading(setIsLoading);
                     setCurrentArtworkIndex((prev) =>
                       currentArtworkIndex > 0 ? prev - 1 : 0,
                     );
@@ -101,7 +95,7 @@ export const DashboardArtMuseum = () => {
                 </button>
                 <button
                   onClick={async () => {
-                    await triggerLoading();
+                    await triggerLoading(setIsLoading);
                     setCurrentArtworkIndex((prev) =>
                       currentArtworkIndex < Artworks.length - 1
                         ? prev + 1

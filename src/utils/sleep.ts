@@ -17,3 +17,9 @@ export const hiddenInformation = async () => {
   const sleepInstance = new sleepClass();
   await sleepInstance.sleepMethod();
 };
+
+export async function triggerLoading(callback: (isLoading: boolean) => void) {
+  callback(true);
+  await hiddenInformation();
+  callback(false);
+}
