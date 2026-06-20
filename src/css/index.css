@@ -378,7 +378,7 @@ header {
   }
 }
 
-.no-liked-pictures-container {
+.no-liked-pictures-container, .no-artworks-container {
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -398,6 +398,10 @@ header {
     border-radius: 10px;
     font-weight: bold;
   }
+}
+
+.no-artworks-container {
+    height: 15vh;
 }
 
 /* Credentials*/
