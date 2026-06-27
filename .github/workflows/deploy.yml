@@ -24,8 +24,23 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-service-account.json"
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$GOOGLE_APPLICATION_CREDENTIALS"
+
+          set +e
+          DEPLOY_OUTPUT=$(npx firebase-tools@latest deploy --only hosting --project mcp-project-471a6 --non-interactive 2>&1)
+          DEPLOY_STATUS=$?
+          set -e
+
+          echo "$DEPLOY_OUTPUT"
+
+          if [ $DEPLOY_STATUS -ne 0 ]; then
+            if echo "$DEPLOY_OUTPUT" | grep -q "is the current active version"; then
+              echo "Firebase Hosting is already serving this version; treating deploy as successful."
+              exit 0
+            fi
+            exit $DEPLOY_STATUS
+          fi
