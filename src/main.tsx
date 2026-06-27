@@ -1,4 +1,4 @@
-import { Profiler, StrictMode } from "react";
+import { Profiler, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./css/index.css";
 import { logInUser, signUpUser } from "./utils/firebase.ts";
@@ -19,10 +19,26 @@ import { SignUp } from "./view/SignUp.tsx";
 import { LogIn } from "./view/LogIn.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { LoaderProvider } from "./context/LoaderContext.tsx";
+import { Loader } from "./components/Loader.tsx";
+
 const router = createBrowserRouter([
   { path: "/Home", element: <Home /> },
-  { path: "/Dashboard/ArtMuseum", element: <DashboardArtMuseum /> },
-  { path: "/Dashboard/LikedPictures", element: <DashboardArtPictures /> },
+  {
+    path: "/Dashboard/ArtMuseum",
+    element: (
+      <Suspense fallback={<Loader isLoading={true} />}>
+        <DashboardArtMuseum />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/Dashboard/SavedPictures",
+    element: (
+      <Suspense fallback={<Loader isLoading={true} />}>
+        <DashboardArtPictures />
+      </Suspense>
+    ),
+  },
   { path: "/Dashboard/PostedOnLinkedIn", element: <DashboardLinkedIn /> },
   { path: "/Dashboard/Credentials", element: <DashboardCredentials /> },
   {

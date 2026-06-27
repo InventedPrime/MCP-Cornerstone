@@ -8,7 +8,7 @@ import { getSavedPosts, removeSavedPost } from "../../utils/firebase";
 import { getMuseumArtworksByIds } from "../../utils/MuseumArtworks";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
-import { hiddenInformation } from "../../utils/sleep";
+// import { hiddenInformation } from "../../utils/sleep";
 
 export const DashboardArtPictures = () => {
   const { user } = useAuth();
@@ -18,9 +18,8 @@ export const DashboardArtPictures = () => {
   useEffect(() => {
     if (!user) return;
 
-    const unsub = getSavedPosts(user!.uid, async (ids: string[]) => {
+    const unsub = getSavedPosts(user!.uid, async (ids: number[]) => {
       setIsLoading(true);
-      await hiddenInformation();
       if (ids.length > 0) {
         const data = await getMuseumArtworksByIds(ids);
         setLikedArtworks(data);
@@ -40,7 +39,6 @@ export const DashboardArtPictures = () => {
 
   const handleOnRemoveLike = async (artworkId: string) => {
     setIsLoading(true);
-    await hiddenInformation();
     setLikedArtworks((prev) =>
       prev!.filter((artwork) => artwork.id !== artworkId),
     );
@@ -59,8 +57,21 @@ export const DashboardArtPictures = () => {
           <div className="liked-pictures-container">
             {likedArtworks.map((artwork) => (
               <div key={artwork.id} className="picture-div">
-                <p>{artwork.title}</p>
-                <img src={artwork.imageUrl} alt={artwork.title} />
+                <p
+                  style={{
+                    fontSize: artwork.title.length > 40 ? "18px" : "26px",
+                  }}
+                >
+                  {artwork.title}
+                </p>
+                <img
+                  src={
+                    artwork.imageUrl == ""
+                      ? "../src/assets/Image_Not_found.png"
+                      : artwork.imageUrl
+                  }
+                  alt={artwork.title}
+                />
                 <button onClick={() => handleOnRemoveLike(artwork.id)}>
                   Remove
                 </button>
@@ -69,7 +80,7 @@ export const DashboardArtPictures = () => {
           </div>
         ) : (
           <div className="no-liked-pictures-container">
-            <p>No Liked Pictures.</p>
+            <p>No Saved Pictures.</p>
           </div>
         )}
       </div>

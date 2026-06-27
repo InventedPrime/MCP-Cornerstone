@@ -7,6 +7,7 @@ Copilot helped me write parts of this css file. I've made adjustments to the cla
 
 :root {
   --blue: #0a66c2;
+  --light-green: #088408;
   --light-blue: #74b9ff;
   --dark-text: #000000;
   --light-gray: #f3f2ef;
@@ -348,8 +349,11 @@ header {
     padding: 20px;
 
     p {
+      display: flex;
+      justify-content: center;
       text-align: center;
       align-items: center;
+      height: 100px;
       margin: 0;
       width: 200px;
       background-color: transparent;
@@ -360,7 +364,7 @@ header {
     img {
       width: 200px;
       height: 200px;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 8px;
       background-color: transparent;
       filter: drop-shadow(0px 4px 3px black);

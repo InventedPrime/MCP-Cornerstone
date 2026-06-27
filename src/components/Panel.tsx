@@ -20,11 +20,11 @@ export const Panel = () => {
       <button
         className={
           "sidebars " +
-          (location.pathname === "/Dashboard/LikedPictures"
+          (location.pathname === "/Dashboard/SavedPictures"
             ? "locationpresent"
             : "")
         }
-        onClick={() => navigate("/Dashboard/LikedPictures")}
+        onClick={() => navigate("/Dashboard/SavedPictures")}
       >
         Saved Pictures
       </button>
