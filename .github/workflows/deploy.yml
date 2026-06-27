@@ -1,31 +1,24 @@
-name: Deploy to Firebase
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+  - name: Set up Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 22
 
-      - name: Install dependencies
-        run: npm ci
+  - name: Install dependencies
+    run: npm ci
 
-      - name: Build
-        run: npm run build
+  # 1. Break Vite's caching by injecting the GitHub run ID as an env variable
+  - name: Inject Unique Build ID
+    run: echo "VITE_APP_BUILD_ID=${{ github.run_id }}" >> .env
 
-      # Step 1: Properly authenticate the Service Account with Google Cloud
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+  - name: Build
+    run: npm run build
 
-      # Step 2: Run the standard Firebase deploy
-      - name: Deploy to Firebase Hosting
-        run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
+  # 2. Deploy flawlessly using the direct CLI tool and your token
+  - name: Deploy to Firebase
+    run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
