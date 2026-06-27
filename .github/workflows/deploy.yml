@@ -28,3 +28,4 @@ jobs:
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: mcp-project-471a6
+          channelId: live

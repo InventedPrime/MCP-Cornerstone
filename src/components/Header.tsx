@@ -13,7 +13,7 @@ export const Header = () => {
       <header>
         <div className="header-container-logo">
           <img src="/MCPLogo.png" alt="MCP Logo" />
-          <h1>MCP Cornerstones</h1>
+          <h1>MCP Cornerstone</h1>
         </div>
         <div className="header-container-nav">
           <Link
