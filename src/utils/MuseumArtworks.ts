@@ -1,29 +1,39 @@
-// AI helped me build this file because of the slight complexities in retrieving and building the string
+export const domain =
+  "https://collectionapi.metmuseum.org/public/collection/v1";
 
-const getRandomPage = () => Math.floor(Math.random() * 100) + 1; // Random page 1-100
+export type ArtworkResponse = {
+  objectID: number;
+  title: string;
+  artistDisplayName: string;
+  primaryImageSmall: string;
+};
+export type Artwork = {
+  id: number;
+  title: string;
+  artist_display: string;
+  imageUrl: string;
+};
 
 export const MuseumArtworks = fetch(
-  `https://api.artic.edu/api/v1/artworks?limit=100&page=${getRandomPage()}&fields=id,title,image_id,artist_display`,
+  `${domain}/search?hasImages=true&isOnView=true&q=art`,
 )
   .then((res) => res.json())
-  .then(({ data }) =>
-    data.filter(
-      (artwork: any) => artwork.title !== "Untitled" && artwork.image_id,
-    ),
+  .then(({ objectIDs }) =>
+    [...objectIDs].sort(() => Math.random() - 0.5).slice(0, 100),
   );
 
-export const getMuseumArtworksByIds = (ids: string[]) => {
-  return fetch(
-    `https://api.artic.edu/api/v1/artworks?ids=${ids.join(",")}&fields=id,image_id,title,artist_display`,
-  )
+export const getMuseumArtworkById = (id: number) =>
+  fetch(`${domain}/objects/${id}`)
     .then((res) => res.json())
-    .then(({ data }) =>
-      data.map((artwork: any) => ({
-        ...artwork,
-        imageUrl:
-          artwork.image_id ?
-            `https://www.artic.edu/iiif/2/${artwork.image_id}/full/!843,843/0/default.jpg`
-          : null,
-      })),
-    );
-};
+    .then(
+      (artwork: ArtworkResponse): Artwork => ({
+        id: artwork.objectID,
+        title: artwork.title,
+        artist_display: artwork.artistDisplayName,
+        imageUrl: artwork.primaryImageSmall,
+      }),
+    )
+    .catch((error) => {
+      console.error(`Error fetching artwork with ID ${id}:`, error);
+      return null; // Return null or handle the error as needed
+    });

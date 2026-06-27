@@ -7,6 +7,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, set, ref, remove, onValue } from "firebase/database";
+import type { Artwork } from "./MuseumArtworks";
 
 // Firebases config object, genereated by firebase in my firebase project settings
 const firebaseConfig = {
@@ -64,17 +65,21 @@ export const signOutUser = async () => {
   }
 };
 
-export const savedLikedPost = (userId: string, postId: string) => {
-  set(ref(db, "users/" + userId + "/likedPosts/" + postId), true);
+export const savePost = (userId: string, post: Artwork) => {
+  set(ref(db, "users/" + userId + `/likedPosts/${post.id}`), {
+    ...post,
+    savedAt: Date.now(),
+  });
 };
-export const removeLikedPost = (userId: string, postId: string) => {
+export const removeSavedPost = (userId: string, postId: string) => {
   remove(ref(db, "users/" + userId + "/likedPosts/" + postId));
 };
 
-export const getLikedPosts = (userId: string, setCallBack: any) => {
+export const getSavedPosts = (userId: string, setCallBack: any) => {
   const likedPostsRef = ref(db, "users/" + userId + "/likedPosts");
+
   const unsub = onValue(likedPostsRef, (snapshot) => {
-    setCallBack(Object.keys(snapshot.val() || {}));
+    setCallBack(Object.values(snapshot.val() || {}));
   });
   return unsub;
 };
