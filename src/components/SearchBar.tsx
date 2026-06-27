@@ -14,6 +14,11 @@ export default function SearchBar({
   };
 
   return (
-    <input value={query} onChange={handleSearch} placeholder="Search..." />
+    <input
+      className="search-bar"
+      value={query}
+      onChange={handleSearch}
+      placeholder="Search For Artwork..."
+    />
   );
 }

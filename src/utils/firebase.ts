@@ -79,7 +79,11 @@ export const getSavedPosts = (userId: string, setCallBack: any) => {
   const likedPostsRef = ref(db, "users/" + userId + "/likedPosts");
 
   const unsub = onValue(likedPostsRef, (snapshot) => {
-    setCallBack(Object.values(snapshot.val() || {}));
+    const data: (Artwork & { savedAt: number })[] = Object.values(
+      snapshot.val() || {},
+    );
+    data.sort((a, b) => b.savedAt - a.savedAt);
+    setCallBack(data);
   });
   return unsub;
 };

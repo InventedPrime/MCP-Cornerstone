@@ -25,7 +25,7 @@ export const DashboardArtMuseum = () => {
 
   useEffect(() => {
     if (!user?.uid) return;
-    const unsub = getSavedPosts(user.uid, async (savedPosts: Artwork[]) =>
+    const unsub = getSavedPosts(user.uid, (savedPosts: Artwork[]) =>
       setSavedPosts(savedPosts),
     );
     return () => unsub();
