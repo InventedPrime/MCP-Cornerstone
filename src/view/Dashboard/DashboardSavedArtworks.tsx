@@ -8,6 +8,7 @@ import { getSavedPosts, removeSavedPost } from "../../utils/firebase";
 import { type Artwork } from "../../utils/MuseumArtworks";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
+import imageNotFound from "../../assets/Image_Not_Found.png";
 
 export const DashboardSavedArtworks = () => {
   const { user } = useAuth();
@@ -60,9 +61,7 @@ export const DashboardSavedArtworks = () => {
                 </p>
                 <img
                   src={
-                    artwork.imageUrl == ""
-                      ? "../src/assets/Image_Not_found.png"
-                      : artwork.imageUrl
+                    artwork.imageUrl == "" ? imageNotFound : artwork.imageUrl
                   }
                   alt={artwork.title}
                 />
