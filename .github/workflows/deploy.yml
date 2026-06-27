@@ -1,4 +1,13 @@
-steps:
+name: Deploy to Firebase
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -10,14 +19,13 @@ steps:
       - name: Install dependencies
         run: npm ci
 
-      # 1. Break Vite's caching by injecting the GitHub run ID as an env variable
+      # This creates the .env file dynamically on the runner to break the Firebase cache
       - name: Inject Unique Build ID
         run: echo "VITE_APP_BUILD_ID=${{ github.run_id }}" >> .env
 
       - name: Build
         run: npm run build
 
-      # 2. Deploy flawlessly using the direct CLI tool and your token
       - name: Deploy to Firebase
         run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
         env:
