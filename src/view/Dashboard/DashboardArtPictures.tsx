@@ -5,41 +5,35 @@ import { Panel } from "../../components/Panel";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { getSavedPosts, removeSavedPost } from "../../utils/firebase";
-import { getMuseumArtworksByIds } from "../../utils/MuseumArtworks";
+import { type Artwork } from "../../utils/MuseumArtworks";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
-// import { hiddenInformation } from "../../utils/sleep";
 
 export const DashboardArtPictures = () => {
   const { user } = useAuth();
   const { isLoading, setIsLoading } = useLoader();
-  const [likedArtworks, setLikedArtworks] = useState<any[] | null>(null);
+  const [savedArtworks, setSavedArtworks] = useState<any[] | null>(null);
 
   useEffect(() => {
     if (!user) return;
 
-    const unsub = getSavedPosts(user!.uid, async (ids: number[]) => {
-      setIsLoading(true);
-      if (ids.length > 0) {
-        const data = await getMuseumArtworksByIds(ids);
-        setLikedArtworks(data);
-      } else {
-        setLikedArtworks([]);
-      }
+    const unsub = getSavedPosts(user!.uid, (savedArtworks: Artwork[]) => {
+      setSavedArtworks(savedArtworks);
+      setIsLoading(false);
     });
 
     return () => unsub();
   }, []);
 
   useEffect(() => {
-    if (likedArtworks !== null) {
+    if (savedArtworks !== null) {
       setIsLoading(false);
     }
-  }, [likedArtworks]);
+  }, [savedArtworks]);
 
   const handleOnRemoveLike = async (artworkId: string) => {
     setIsLoading(true);
-    setLikedArtworks((prev) =>
+    setSavedArtworks((prev) =>
       prev!.filter((artwork) => artwork.id !== artworkId),
     );
     removeSavedPost(user!.uid, artworkId);
@@ -53,9 +47,9 @@ export const DashboardArtPictures = () => {
       <Header />
       <div className="dashboard-container">
         <Panel />
-        {likedArtworks && likedArtworks.length > 0 ? (
+        {savedArtworks && savedArtworks.length > 0 ? (
           <div className="liked-pictures-container">
-            {likedArtworks.map((artwork) => (
+            {savedArtworks.map((artwork) => (
               <div key={artwork.id} className="picture-div">
                 <p
                   style={{

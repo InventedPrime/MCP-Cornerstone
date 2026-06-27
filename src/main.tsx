@@ -93,9 +93,7 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const onRenderCallback = (e: any) => {
-    console.log(e);
-  };
+  const onRenderCallback = (e: any) => {};
   return (
     <StrictMode>
       <Profiler id="App" onRender={onRenderCallback}>

@@ -6,7 +6,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useEffect, use, useState } from "react";
 import {
   MuseumArtworks,
-  getMuseumArtworksByIds,
+  getMuseumArtworkById,
+  type Artwork,
 } from "../../utils/MuseumArtworks";
 import { getSavedPosts, savePost } from "../../utils/firebase";
 import { Loader } from "../../components/Loader";
@@ -15,16 +16,16 @@ import { useLoader } from "../../context/LoaderContext";
 export const DashboardArtMuseum = () => {
   const { user } = useAuth();
   const { isLoading, setIsLoading } = useLoader();
-  const [savedPictures, setSavedPictures] = useState<string[]>([]);
+  const [savedPosts, setSavedPosts] = useState<Artwork[]>([]);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
   const [currentArtworkIndex, setCurrentArtworkIndex] = useState<number>(0);
-  const [currentArtwork, setCurrentArtwork] = useState<any>(null);
+  const [currentArtwork, setCurrentArtwork] = useState<Artwork | null>(null);
   const artworkIds = use<number[]>(MuseumArtworks);
 
   useEffect(() => {
     if (!user?.uid) return;
-
-    const unsub = getSavedPosts(user.uid, async (savedPosts: string[]) => {
-      setSavedPictures(savedPosts);
+    const unsub = getSavedPosts(user.uid, async (savedPosts: Artwork[]) => {
+      setSavedPosts(savedPosts);
     });
     return () => unsub();
   }, []);
@@ -32,19 +33,45 @@ export const DashboardArtMuseum = () => {
   useEffect(() => {
     if (!artworkIds.length) return;
     setIsLoading(true);
-    getMuseumArtworksByIds([artworkIds[currentArtworkIndex]]).then(
-      ([artwork]) => {
-        setCurrentArtwork(artwork);
-        setIsLoading(false);
-      },
-    );
+    getMuseumArtworkById(artworkIds[currentArtworkIndex]).then((artwork) => {
+      setCurrentArtwork(artwork);
+      setIsLoading(false);
+    });
   }, [currentArtworkIndex]);
 
+  useEffect(() => {
+    if (!currentArtwork) return;
+    const isArtworkSaved = savedPosts.some(
+      (artwork) => artwork.id === currentArtwork.id,
+    );
+    setIsSaved(isArtworkSaved);
+  }, [currentArtwork]);
+
   const handleOnLike = async () => {
-    if (currentArtwork && !savedPictures.includes(currentArtwork.id)) {
-      setSavedPictures((prev) => [...prev, currentArtwork.id.toString()]);
-      savePost(user!.uid, currentArtwork.id.toString());
+    if (
+      currentArtwork &&
+      !savedPosts.some((artwork) => artwork.id === currentArtwork.id)
+    ) {
+      setIsSaved(true);
+      const data = {
+        id: currentArtwork.id,
+        title: currentArtwork.title,
+        artist_display: currentArtwork.artist_display,
+        imageUrl: currentArtwork.imageUrl,
+      };
+      setSavedPosts((prev) => [...prev, data]);
+      savePost(user!.uid, data);
     }
+  };
+
+  const handleRight = () => {
+    setCurrentArtworkIndex((prev) =>
+      prev < artworkIds.length - 1 ? prev + 1 : prev,
+    );
+  };
+
+  const handleLeft = () => {
+    setCurrentArtworkIndex((prev) => (prev > 0 ? prev - 1 : 0));
   };
 
   return !user ? (
@@ -58,54 +85,36 @@ export const DashboardArtMuseum = () => {
         <div className="Artmuseum-container">
           {currentArtwork ? (
             <>
-              <h1>{currentArtwork.title}</h1>
+              <h1>{currentArtwork?.title}</h1>
               <div className="picture-container">
                 <img
                   src={
-                    currentArtwork.imageUrl == ""
+                    currentArtwork?.imageUrl == ""
                       ? "../src/assets/Image_Not_Found.png"
                       : currentArtwork.imageUrl
                   }
                   alt="Art Museum"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "../src/assets/Image_Not_Found.png";
+                  }}
                 />
               </div>
               <div className="navigate-container">
+                <button onClick={handleLeft}>Left</button>
                 <button
-                  onClick={async () => {
-                    setCurrentArtworkIndex((prev) => (prev > 0 ? prev - 1 : 0));
-                  }}
-                >
-                  Left
-                </button>
-                <button
-                  disabled={savedPictures.includes(
-                    currentArtwork.id.toString(),
-                  )}
+                  disabled={isSaved}
                   style={{
-                    backgroundColor: savedPictures.includes(
-                      currentArtwork.id.toString(),
-                    )
+                    backgroundColor: isSaved
                       ? "var(--light-green)"
                       : "var(--blue)",
-                    cursor: savedPictures.includes(currentArtwork.id.toString())
-                      ? "auto"
-                      : "pointer",
+                    cursor: isSaved ? "auto" : "pointer",
                   }}
                   onClick={handleOnLike}
                 >
-                  {savedPictures.includes(currentArtwork.id.toString())
-                    ? "Saved"
-                    : "Save"}
+                  {isSaved ? "Saved" : "Save"}
                 </button>
-                <button
-                  onClick={() => {
-                    setCurrentArtworkIndex((prev) =>
-                      prev < artworkIds.length - 1 ? prev + 1 : prev,
-                    );
-                  }}
-                >
-                  Right
-                </button>
+                <button onClick={handleRight}>Right</button>
               </div>
             </>
           ) : (
