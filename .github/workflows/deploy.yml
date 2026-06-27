@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # This creates the .env file dynamically on the runner to break the Firebase cache
+      # Breaks Vite's caching by creating a unique .env file on the runner
       - name: Inject Unique Build ID
         run: echo "VITE_APP_BUILD_ID=${{ github.run_id }}" >> .env
 
@@ -27,6 +27,8 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
+        # Adding --site explicitly resolves the hosting target assertion error
+        run: npx firebase-tools deploy --only hosting --site mcp-project-471a6 --project mcp-project-471a6
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          # Using the modern, non-deprecated Google App Credentials variable
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
