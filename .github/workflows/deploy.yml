@@ -26,9 +26,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # The official Google tool handles extracting and passing credentials perfectly
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      # Deploys hosting smoothly without any buggy or deprecated flags
       - name: Deploy to Firebase
-        # Adding --site explicitly resolves the hosting target assertion error
-        run: npx firebase-tools deploy --only hosting --site mcp-project-471a6 --project mcp-project-471a6
-        env:
-          # Using the modern, non-deprecated Google App Credentials variable
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
