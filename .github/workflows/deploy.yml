@@ -1,13 +1,10 @@
 name: Deploy to Firebase
-
 on:
   push:
     branches: [main]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,9 +21,8 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: mcp-project-471a6
-          channelId: live
-          entryPoint: . 
+        # npx firebase-tools deploy ensures you're using the standard CLI directly
+        run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
+        env:
+          # You can feed your service account JSON directly into this environment variable
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
