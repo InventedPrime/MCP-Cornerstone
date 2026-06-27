@@ -7,7 +7,6 @@ import { Loader } from './Loader';
 export const Header = () => {
     const { user, loading } = useAuth();
     const location = useLocation();
-    console.log(loading, user)
     return (
         <>
         <Loader isLoading={loading}/>

@@ -4,7 +4,6 @@ import { Header } from "../../components/Header"
 import { Panel } from "../../components/Panel"
 import { useAuth } from "../../context/AuthContext"
 
-
 export const DashboardCredentials = () => {
     const { user } = useAuth();
 
