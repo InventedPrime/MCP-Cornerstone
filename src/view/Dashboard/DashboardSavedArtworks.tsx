@@ -9,7 +9,7 @@ import { type Artwork } from "../../utils/MuseumArtworks";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
 
-export const DashboardArtPictures = () => {
+export const DashboardSavedArtworks = () => {
   const { user } = useAuth();
   const { isLoading, setIsLoading } = useLoader();
   const [savedArtworks, setSavedArtworks] = useState<any[] | null>(null);

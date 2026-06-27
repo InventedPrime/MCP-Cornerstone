@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const LoaderContext = createContext({
   isLoading: true,
-  setIsLoading: (value: boolean) => {},
+  setIsLoading: (_value: boolean) => {},
 });
 
 export const useLoader = () => useContext(LoaderContext);

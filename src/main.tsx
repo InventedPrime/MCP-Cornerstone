@@ -1,4 +1,4 @@
-import { Profiler, StrictMode, Suspense } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./css/index.css";
 import { logInUser, signUpUser } from "./utils/firebase.ts";
@@ -11,7 +11,7 @@ import {
 import { Home } from "./view/Home.tsx";
 import {
   DashboardArtMuseum,
-  DashboardArtPictures,
+  DashboardSavedArtworks,
   DashboardCredentials,
   DashboardLinkedIn,
 } from "./view/Dashboard";
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     path: "/Dashboard/SavedPictures",
     element: (
       <Suspense fallback={<Loader isLoading={true} />}>
-        <DashboardArtPictures />
+        <DashboardSavedArtworks />
       </Suspense>
     ),
   },
@@ -93,16 +93,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const onRenderCallback = (e: any) => {};
   return (
     <StrictMode>
-      <Profiler id="App" onRender={onRenderCallback}>
-        <AuthProvider>
-          <LoaderProvider>
-            <RouterProvider router={router} />
-          </LoaderProvider>
-        </AuthProvider>
-      </Profiler>
+      <AuthProvider>
+        <LoaderProvider>
+          <RouterProvider router={router} />
+        </LoaderProvider>
+      </AuthProvider>
     </StrictMode>
   );
 };
