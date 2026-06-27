@@ -24,9 +24,9 @@ export const DashboardArtMuseum = () => {
 
   useEffect(() => {
     if (!user?.uid) return;
-    const unsub = getSavedPosts(user.uid, async (savedPosts: Artwork[]) => {
-      setSavedPosts(savedPosts);
-    });
+    const unsub = getSavedPosts(user.uid, async (savedPosts: Artwork[]) =>
+      setSavedPosts(savedPosts),
+    );
     return () => unsub();
   }, []);
 
@@ -41,10 +41,7 @@ export const DashboardArtMuseum = () => {
 
   useEffect(() => {
     if (!currentArtwork) return;
-    const isArtworkSaved = savedPosts.some(
-      (artwork) => artwork.id === currentArtwork.id,
-    );
-    setIsSaved(isArtworkSaved);
+    setIsSaved(savedPosts.some((artwork) => artwork.id === currentArtwork.id));
   }, [currentArtwork]);
 
   const handleOnLike = async () => {
