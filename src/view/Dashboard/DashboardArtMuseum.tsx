@@ -12,6 +12,7 @@ import {
 import { getSavedPosts, savePost } from "../../utils/firebase";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
+import imageNotFound from "../../assets/Image_Not_Found.png";
 
 export const DashboardArtMuseum = () => {
   const { user } = useAuth();
@@ -87,14 +88,13 @@ export const DashboardArtMuseum = () => {
                 <img
                   src={
                     currentArtwork?.imageUrl == ""
-                      ? "../src/assets/Image_Not_Found.png"
+                      ? imageNotFound
                       : currentArtwork.imageUrl
                   }
                   alt="Art Museum"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "../src/assets/Image_Not_Found.png";
-                  }}
+                  onError={(e) =>
+                    ((e.target as HTMLImageElement).src = imageNotFound)
+                  }
                 />
               </div>
               <div className="navigate-container">
