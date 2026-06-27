@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Panel } from "../../components/Panel";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
-import { getLikedPosts, removeLikedPost } from "../../utils/firebase";
+import { getSavedPosts, removeSavedPost } from "../../utils/firebase";
 import { getMuseumArtworksByIds } from "../../utils/MuseumArtworks";
 import { Loader } from "../../components/Loader";
 import { useLoader } from "../../context/LoaderContext";
@@ -18,7 +18,7 @@ export const DashboardArtPictures = () => {
   useEffect(() => {
     if (!user) return;
 
-    const unsub = getLikedPosts(user!.uid, async (ids: string[]) => {
+    const unsub = getSavedPosts(user!.uid, async (ids: string[]) => {
       setIsLoading(true);
       await hiddenInformation();
       if (ids.length > 0) {
@@ -44,7 +44,7 @@ export const DashboardArtPictures = () => {
     setLikedArtworks((prev) =>
       prev!.filter((artwork) => artwork.id !== artworkId),
     );
-    removeLikedPost(user!.uid, artworkId);
+    removeSavedPost(user!.uid, artworkId);
   };
 
   return !user ? (
@@ -62,7 +62,7 @@ export const DashboardArtPictures = () => {
                 <p>{artwork.title}</p>
                 <img src={artwork.imageUrl} alt={artwork.title} />
                 <button onClick={() => handleOnRemoveLike(artwork.id)}>
-                  Remove Like
+                  Remove
                 </button>
               </div>
             ))}

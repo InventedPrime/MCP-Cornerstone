@@ -5,7 +5,7 @@ class sleepClass {
   private sleepTime: number = 0;
 
   constructor() {
-    this.sleepTime = 2000;
+    this.sleepTime = 0;
   }
 
   public async sleepMethod() {

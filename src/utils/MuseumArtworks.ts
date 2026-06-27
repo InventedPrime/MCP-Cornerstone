@@ -1,26 +1,42 @@
-const getRandomPage = () => Math.floor(Math.random() * 100) + 1; // Random page 1-100
+const domain = "https://collectionapi.metmuseum.org/public/collection/v1";
 
 export const MuseumArtworks = fetch(
-  `https://api.artic.edu/api/v1/artworks?limit=100&page=${getRandomPage()}&fields=id,title,image_id,artist_display`,
+  `${domain}/search?hasImages=true&q=painting`,
 )
   .then((res) => res.json())
-  .then(({ data }) =>
-    data.filter(
-      (artwork: any) => artwork.title !== "Untitled" && artwork.image_id,
-    ),
-  );
+  .then(({ objectIDs }) => {
+    const shuffled = [...objectIDs].sort(() => Math.random() - 0.5);
+    const randomIds = shuffled.slice(0, 100);
+    return Promise.all(
+      randomIds.map((id: number) =>
+        fetch(`${domain}/objects/${id}`)
+          .then((res) => res.json())
+          .then((artwork) =>
+            artwork.primaryImageSmall && artwork.title
+              ? {
+                  id: artwork.objectID,
+                  title: artwork.title,
+                  artist_display: artwork.artistDisplayName,
+                  imageUrl: artwork.primaryImageSmall,
+                }
+              : null,
+          )
+          .catch(() => null),
+      ),
+    ).then((results) => results.filter(Boolean));
+  });
 
 export const getMuseumArtworksByIds = (ids: string[]) => {
-  return fetch(
-    `https://api.artic.edu/api/v1/artworks?ids=${ids.join(",")}&fields=id,image_id,title,artist_display`,
-  )
-    .then((res) => res.json())
-    .then(({ data }) =>
-      data.map((artwork: any) => ({
-        ...artwork,
-        imageUrl: artwork.image_id
-          ? `https://www.artic.edu/iiif/2/${artwork.image_id}/full/!843,843/0/default.jpg`
-          : null,
-      })),
-    );
+  return Promise.all(
+    ids.map((id) =>
+      fetch(`${domain}/objects/${id}`)
+        .then((res) => res.json())
+        .then((artwork) => ({
+          id: artwork.objectID,
+          title: artwork.title,
+          artist_display: artwork.artistDisplayName,
+          imageUrl: artwork.primaryImageSmall || null,
+        })),
+    ),
+  );
 };
