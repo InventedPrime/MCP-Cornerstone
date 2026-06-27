@@ -1,24 +1,24 @@
 steps:
-  - name: Checkout code
-    uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  - name: Set up Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: 22
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-  - name: Install dependencies
-    run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  # 1. Break Vite's caching by injecting the GitHub run ID as an env variable
-  - name: Inject Unique Build ID
-    run: echo "VITE_APP_BUILD_ID=${{ github.run_id }}" >> .env
+      # 1. Break Vite's caching by injecting the GitHub run ID as an env variable
+      - name: Inject Unique Build ID
+        run: echo "VITE_APP_BUILD_ID=${{ github.run_id }}" >> .env
 
-  - name: Build
-    run: npm run build
+      - name: Build
+        run: npm run build
 
-  # 2. Deploy flawlessly using the direct CLI tool and your token
-  - name: Deploy to Firebase
-    run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
-    env:
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      # 2. Deploy flawlessly using the direct CLI tool and your token
+      - name: Deploy to Firebase
+        run: npx firebase-tools deploy --only hosting --project mcp-project-471a6
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
