@@ -66,6 +66,11 @@ export const signOutUser = async () => {
 };
 
 export const savePost = (userId: string, post: Artwork) => {
+  if (post.id == undefined) {
+    console.error("Cannot save post: post.id is undefined");
+    return;
+  }
+
   set(ref(db, "users/" + userId + `/likedPosts/${post.id}`), {
     ...post,
     savedAt: Date.now(),

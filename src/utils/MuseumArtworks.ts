@@ -6,12 +6,14 @@ export type ArtworkResponse = {
   title: string;
   artistDisplayName: string;
   primaryImageSmall: string;
+  department: string;
 };
 export type Artwork = {
   id: number;
   title: string;
   artist_display: string;
   imageUrl: string;
+  department: string;
 };
 
 export const MuseumArtworks = fetch(
@@ -31,6 +33,7 @@ export const getMuseumArtworkById = (id: number) =>
         title: artwork.title,
         artist_display: artwork.artistDisplayName,
         imageUrl: artwork.primaryImageSmall,
+        department: artwork.department,
       }),
     )
     .catch((error) => {

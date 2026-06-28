@@ -28,6 +28,17 @@ export const Panel = () => {
       >
         Saved Pictures
       </button>
+      <button
+        className={
+          "sidebars " +
+          (location.pathname === "/Dashboard/ArtMetrics"
+            ? "locationpresent"
+            : "")
+        }
+        onClick={() => navigate("/Dashboard/ArtMetrics")}
+      >
+        Art Metrics
+      </button>
       {/* <button
         className={
           "sidebars " +

@@ -51,11 +51,12 @@ export const DashboardArtMuseum = () => {
       !savedPosts.some((artwork) => artwork.id === currentArtwork.id)
     ) {
       setIsSaved(true);
-      const data = {
+      const data: Artwork = {
         id: currentArtwork.id,
         title: currentArtwork.title,
         artist_display: currentArtwork.artist_display,
         imageUrl: currentArtwork.imageUrl,
+        department: currentArtwork.department,
       };
       setSavedPosts((prev) => [...prev, data]);
       savePost(user!.uid, data);
@@ -83,13 +84,17 @@ export const DashboardArtMuseum = () => {
         <div className="Artmuseum-container">
           {currentArtwork ? (
             <>
-              <h1>{currentArtwork?.title}</h1>
+              <h1>
+                {currentArtwork?.title
+                  ? currentArtwork.title
+                  : "Unavailable Title"}
+              </h1>
               <div className="picture-container">
                 <img
                   src={
-                    currentArtwork?.imageUrl == ""
-                      ? imageNotFound
-                      : currentArtwork.imageUrl
+                    currentArtwork?.imageUrl
+                      ? currentArtwork.imageUrl
+                      : imageNotFound
                   }
                   alt="Art Museum"
                   onError={(e) =>

@@ -20,6 +20,7 @@ import { LogIn } from "./view/LogIn.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { LoaderProvider } from "./context/LoaderContext.tsx";
 import { Loader } from "./components/Loader.tsx";
+import { DashboardArtMetrics } from "./view/Dashboard/DashboardArtMetrics.tsx";
 
 const router = createBrowserRouter([
   { path: "/Home", element: <Home /> },
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
   },
   { path: "/Dashboard/PostedOnLinkedIn", element: <DashboardLinkedIn /> },
   { path: "/Dashboard/Credentials", element: <DashboardCredentials /> },
+  { path: "/Dashboard/ArtMetrics", element: <DashboardArtMetrics /> },
   {
     path: "/SignUp",
     element: <SignUp />,

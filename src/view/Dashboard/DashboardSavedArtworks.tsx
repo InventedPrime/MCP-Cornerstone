@@ -16,12 +16,16 @@ export const DashboardSavedArtworks = () => {
   const { isLoading, setIsLoading } = useLoader();
   const [savedArtworks, setSavedArtworks] = useState<Artwork[]>([]);
   const cachedArtworks = useRef<Artwork[]>([]);
+  const cachedDepartments = useRef<string[]>([]);
 
   useEffect(() => {
     if (!user) return;
 
     const unsub = getSavedPosts(user!.uid, (savedArtworks: Artwork[]) => {
       cachedArtworks.current = savedArtworks;
+      cachedDepartments.current = Array.from(
+        new Set(savedArtworks.map((artwork) => artwork.department)),
+      );
       setSavedArtworks(savedArtworks);
       setIsLoading(false);
     });
@@ -43,12 +47,14 @@ export const DashboardSavedArtworks = () => {
     removeSavedPost(user!.uid, artworkId.toString());
   };
 
-  const handleSearch = (query: string) => {
-    if (query == "") {
+  const handleSearch = (query: string, department: string) => {
+    if (query == "" && department == "") {
       setSavedArtworks(cachedArtworks.current);
     } else {
-      const filteredArtworks = cachedArtworks.current.filter((artwork) =>
-        artwork.title.toLowerCase().includes(query),
+      const filteredArtworks = cachedArtworks.current.filter(
+        (artwork) =>
+          artwork.title.toLowerCase().includes(query) &&
+          artwork.department.toLowerCase().includes(department),
       );
       setSavedArtworks(filteredArtworks);
     }
@@ -63,7 +69,10 @@ export const DashboardSavedArtworks = () => {
       <div className="dashboard-container">
         <Panel />
         <div className="dashboard-saved-artworks-container">
-          <SearchBar onChange={handleSearch} />
+          <SearchBar
+            onChange={handleSearch}
+            departments={cachedDepartments.current}
+          />
           {savedArtworks && savedArtworks.length > 0 ? (
             <div className="liked-pictures-container">
               {savedArtworks.map((artwork) => (
@@ -89,7 +98,7 @@ export const DashboardSavedArtworks = () => {
             </div>
           ) : (
             <div className="no-liked-pictures-container">
-              <p>No Saved Pictures.</p>
+              <p>No Saved Artworks.</p>
             </div>
           )}
         </div>
