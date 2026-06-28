@@ -19,8 +19,8 @@ export const DashboardSavedArtworks = () => {
   const cachedDepartments = useRef<string[]>([]);
 
   useEffect(() => {
+    setIsLoading(true);
     if (!user) return;
-
     const unsub = getSavedPosts(user!.uid, (savedArtworks: Artwork[]) => {
       cachedArtworks.current = savedArtworks;
       cachedDepartments.current = Array.from(
@@ -32,12 +32,6 @@ export const DashboardSavedArtworks = () => {
 
     return () => unsub();
   }, []);
-
-  useEffect(() => {
-    if (savedArtworks !== null) {
-      setIsLoading(false);
-    }
-  }, [savedArtworks]);
 
   const handleOnRemoveLike = async (artworkId: number) => {
     setIsLoading(true);
@@ -64,8 +58,8 @@ export const DashboardSavedArtworks = () => {
     <Navigate to="/SignUp" />
   ) : (
     <div className="page-wrapper">
-      <Loader isLoading={isLoading} />
       <Header />
+      <Loader isLoading={isLoading} />
       <div className="dashboard-container">
         <Panel />
         <div className="dashboard-saved-artworks-container">

@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/Dashboard/SavedPictures",
+    path: "/Dashboard/SavedArtworks",
     element: (
       <Suspense fallback={<Loader isLoading={true} />}>
         <DashboardSavedArtworks />
