@@ -35,8 +35,8 @@ export const DashboardArtMuseum = () => {
     if (!artworkIds.length) return;
     setIsLoading(true);
     getMuseumArtworkById(artworkIds[currentArtworkIndex]).then((artwork) => {
-      setCurrentArtwork(artwork);
       setIsLoading(false);
+      setCurrentArtwork(artwork);
     });
   }, [currentArtworkIndex]);
 

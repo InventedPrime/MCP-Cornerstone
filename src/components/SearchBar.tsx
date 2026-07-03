@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLoader } from "../context/LoaderContext";
+import { sleep, hiddenInformation } from "../utils/sleep";
 
 type SearchBarProps = {
   onChange: (query: string, department: string) => void;
@@ -7,35 +9,38 @@ type SearchBarProps = {
 
 export default function SearchBar({ onChange, departments }: SearchBarProps) {
   const [query, setQuery] = useState("");
+  const { setIsLoading } = useLoader();
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
+  const handleSearch = async (e: any) => {
+    e.preventDefault();
+    setIsDisabled(true);
+    setIsLoading(true);
+    await hiddenInformation();
     onChange(
       query.trim().toLowerCase(),
       selectedDepartment.trim().toLowerCase(),
     );
-    setQuery(query);
+    setIsLoading(false);
+    setIsDisabled(false);
   };
-
-  const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const department = e.target.value;
-    onChange(query.trim().toLowerCase(), department.trim().toLowerCase());
-    setSelectedDepartment(department);
-  };
-
   return (
-    <div className="search-bar-container">
+    <form onSubmit={(e) => handleSearch(e)} className="search-bar-container">
       <input
+        disabled={isDisabled}
+        name="search"
         className="search-bar"
         value={query}
-        onChange={handleSearch}
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
         placeholder="Search For Artwork..."
       />
-
       <select
         id="pet-select"
-        onChange={handleDepartmentChange}
+        name="filter"
+        onChange={(e) => setSelectedDepartment(e.target.value)}
         value={selectedDepartment}
       >
         <option value="">Filter</option>
@@ -45,6 +50,6 @@ export default function SearchBar({ onChange, departments }: SearchBarProps) {
           </option>
         ))}
       </select>
-    </div>
+    </form>
   );
 }

@@ -80,7 +80,7 @@ export const DashboardArtMetrics = () => {
                 series={[
                   {
                     dataKey: "count",
-                    label: "Department",
+                    label: "Favorite Art Department",
                     color: "#0511ba",
                   },
                 ]}

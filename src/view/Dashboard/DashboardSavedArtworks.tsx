@@ -34,14 +34,13 @@ export const DashboardSavedArtworks = () => {
   }, []);
 
   const handleOnRemoveLike = async (artworkId: number) => {
-    setIsLoading(true);
     setSavedArtworks((prev) =>
       prev!.filter((artwork) => artwork.id !== artworkId),
     );
     removeSavedPost(user!.uid, artworkId.toString());
   };
 
-  const handleSearch = (query: string, department: string) => {
+  const handleSearch = async (query: string, department: string) => {
     if (query == "" && department == "") {
       setSavedArtworks(cachedArtworks.current);
     } else {
