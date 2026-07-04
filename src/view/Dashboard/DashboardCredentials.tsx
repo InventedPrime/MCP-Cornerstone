@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import { FooterComponent } from "../../components/FooterComponent";
 import { Header } from "../../components/Header";
 import { Panel } from "../../components/Panel";

@@ -1,6 +1,5 @@
 import { Header } from "../../components/Header";
 import { FooterComponent } from "../../components/FooterComponent";
-import { Navigate } from "react-router-dom";
 import { Panel } from "../../components/Panel";
 import { useAuth } from "../../context/AuthContext";
 import { getSavedPosts } from "../../utils/firebase";

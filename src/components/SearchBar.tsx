@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoader } from "../context/LoaderContext";
-import { sleep, hiddenInformation } from "../utils/sleep";
+import { hiddenInformation } from "../utils/sleep";
 
 type SearchBarProps = {
   onChange: (query: string, department: string) => void;
