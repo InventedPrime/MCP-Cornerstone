@@ -25,10 +25,10 @@ import { RequireAuth } from "./components/RequireAuth.tsx";
 
 const router = createBrowserRouter([
   { path: "/Home", element: <Home /> },
-  { path: "/Dashboard", element: <Navigate to="/Dashboard/ArtMuseum" /> },
   {
     element: <RequireAuth />,
     children: [
+      { path: "/Dashboard", element: <Navigate to="/Dashboard/ArtMuseum" /> },
       {
         path: "/Dashboard/ArtMuseum",
         element: (
