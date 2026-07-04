@@ -101,16 +101,12 @@ const router = createBrowserRouter([
   { path: "*", element: <Navigate to="/Home" /> },
 ]);
 
-const App = () => {
-  return (
-    <StrictMode>
-      <AuthProvider>
-        <LoaderProvider>
-          <RouterProvider router={router} />
-        </LoaderProvider>
-      </AuthProvider>
-    </StrictMode>
-  );
-};
-
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <AuthProvider>
+      <LoaderProvider>
+        <RouterProvider router={router} />
+      </LoaderProvider>
+    </AuthProvider>
+  </StrictMode>,
+);
