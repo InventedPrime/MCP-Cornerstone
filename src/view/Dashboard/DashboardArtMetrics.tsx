@@ -35,9 +35,7 @@ export const DashboardArtMetrics = () => {
     return () => unsub();
   }, []);
 
-  return !user ? (
-    <Navigate to="/SignUp" />
-  ) : (
+  return (
     <div className="page-wrapper">
       <Loader isLoading={isLoading} />
       <Header />

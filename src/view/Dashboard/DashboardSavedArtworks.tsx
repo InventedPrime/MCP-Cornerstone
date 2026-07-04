@@ -53,9 +53,7 @@ export const DashboardSavedArtworks = () => {
     }
   };
 
-  return !user ? (
-    <Navigate to="/SignUp" />
-  ) : (
+  return (
     <div className="page-wrapper">
       <Header />
       <Loader isLoading={isLoading} />

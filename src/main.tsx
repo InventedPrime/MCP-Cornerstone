@@ -21,28 +21,36 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import { LoaderProvider } from "./context/LoaderContext.tsx";
 import { Loader } from "./components/Loader.tsx";
 import { DashboardArtMetrics } from "./view/Dashboard/DashboardArtMetrics.tsx";
+import { RequireAuth } from "./components/RequireAuth.tsx";
 
 const router = createBrowserRouter([
   { path: "/Home", element: <Home /> },
+  { path: "/Dashboard", element: <Navigate to="/Dashboard/ArtMuseum" /> },
   {
-    path: "/Dashboard/ArtMuseum",
-    element: (
-      <Suspense fallback={<Loader isLoading={true} />}>
-        <DashboardArtMuseum />
-      </Suspense>
-    ),
+    element: <RequireAuth />,
+    children: [
+      {
+        path: "/Dashboard/ArtMuseum",
+        element: (
+          <Suspense fallback={<Loader isLoading={true} />}>
+            <DashboardArtMuseum />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/Dashboard/SavedArtworks",
+        element: (
+          <Suspense fallback={<Loader isLoading={true} />}>
+            <DashboardSavedArtworks />
+          </Suspense>
+        ),
+      },
+      { path: "/Dashboard/PostedOnLinkedIn", element: <DashboardLinkedIn /> },
+      { path: "/Dashboard/Credentials", element: <DashboardCredentials /> },
+      { path: "/Dashboard/ArtMetrics", element: <DashboardArtMetrics /> },
+    ],
   },
-  {
-    path: "/Dashboard/SavedArtworks",
-    element: (
-      <Suspense fallback={<Loader isLoading={true} />}>
-        <DashboardSavedArtworks />
-      </Suspense>
-    ),
-  },
-  { path: "/Dashboard/PostedOnLinkedIn", element: <DashboardLinkedIn /> },
-  { path: "/Dashboard/Credentials", element: <DashboardCredentials /> },
-  { path: "/Dashboard/ArtMetrics", element: <DashboardArtMetrics /> },
+
   {
     path: "/SignUp",
     element: <SignUp />,
@@ -90,7 +98,6 @@ const router = createBrowserRouter([
       }
     },
   },
-  { path: "/Dashboard", element: <Navigate to="/Dashboard/ArtMuseum" /> }, // For some reason < Link /> doesnt work in this case because it only works when its attached to a clickable element?
   { path: "*", element: <Navigate to="/Home" /> },
 ]);
 

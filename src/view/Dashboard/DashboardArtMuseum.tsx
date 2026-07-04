@@ -24,8 +24,7 @@ export const DashboardArtMuseum = () => {
   const artworkIds = use<number[]>(MuseumArtworks);
 
   useEffect(() => {
-    if (!user?.uid) return;
-    const unsub = getSavedPosts(user.uid, (savedPosts: Artwork[]) =>
+    const unsub = getSavedPosts(user!.uid, (savedPosts: Artwork[]) =>
       setSavedPosts(savedPosts),
     );
     return () => unsub();
@@ -73,9 +72,7 @@ export const DashboardArtMuseum = () => {
     setCurrentArtworkIndex((prev) => (prev > 0 ? prev - 1 : 0));
   };
 
-  return !user ? (
-    <Navigate to="/SignUp" />
-  ) : (
+  return (
     <div className="page-wrapper">
       <Loader isLoading={isLoading} />
       <Header />
